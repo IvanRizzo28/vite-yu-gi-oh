@@ -1,11 +1,13 @@
 <script>
 import {store} from "../store.js";
 import AppCard from './AppCard.vue';
+import AppLoader from './AppLoader.vue';
 
 export default{
     name: "Main",
     components:{
-        AppCard
+        AppCard,
+        AppLoader
     },
     data(){
         return {
@@ -35,7 +37,9 @@ export default{
                 </div>
             </div>
         </section>
-        <section v-else>aaaaaaaaaaa</section>
+        <section v-else>
+            <AppLoader />
+        </section>
     </div>
   </main>
 </template>
