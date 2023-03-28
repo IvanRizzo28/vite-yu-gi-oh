@@ -2,12 +2,14 @@
 import {store} from "../store.js";
 import AppCard from './AppCard.vue';
 import AppLoader from './AppLoader.vue';
+import AppSelect from "./AppSelect.vue";
 
 export default{
     name: "Main",
     components:{
         AppCard,
-        AppLoader
+        AppLoader,
+        AppSelect
     },
     data(){
         return {
@@ -20,12 +22,10 @@ export default{
 <template>
   <main>
     <div class="container">
-        <select name="tipo" id="tipo">
-            <option value="alien">Alien</option>
-        </select>
-        <section v-if="store.n > 0">
+        <AppSelect @search="$emit('cerca')"/>
+        <section v-if="store.carte.length > 0">
             <div class="card-number">
-                Found {{store.n}} Card
+                Found {{store.carte.length}} Card
             </div>
             <div class="content">
                 <div class="col" v-for="element in store.carte">
@@ -49,9 +49,6 @@ export default{
 @use '../assets/stili/mixin.scss' as *;
 main{
     padding: 1.25rem;
-}
-select{
-    padding: .625rem 2.5rem .625rem .625rem;
 }
 section{
     padding: 1.25rem;

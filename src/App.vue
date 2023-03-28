@@ -1,5 +1,5 @@
 <script>
-import {store} from "./store.js";
+import { store } from "./store.js";
 import axios from 'axios';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
@@ -15,19 +15,32 @@ export default {
       store
     }
   },
-  created(){
-    axios.get("https://db.ygoprodeck.com/api/v7/cardinfo.php").then((response)=>{
-      this.store.carte= response.data.data;
-      this.store.n = response.data.data.length;
-      console.log(this.store.carte);
-    });
+  methods: {
+    crea() {
+      axios.get("https://db.ygoprodeck.com/api/v7/cardinfo.php").then((response) => {
+        this.store.carte = response.data.data.slice(0, 50); //inserisco al massimo 50 elementi nell'array
+        console.log(this.store.carte);
+      });
+    },
+    search() {
+      if (this.store.cerca !== '') {
+        axios.get("https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=" + this.store.cerca).then((response) => {
+          this.store.carte = response.data.data;
+          console.log(this.store.carte);
+        });
+      }
+      else this.crea();
+    }
+  },
+  created() {
+    this.crea();
   }
 }
 </script>
 
 <template>
   <AppHeader />
-  <AppMain />
+  <AppMain @cerca="search" />
 </template>
 
 <style>
